@@ -15,10 +15,12 @@ function sayHello() {
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, 1024, 128 );
+  ctx.beginPath();
   ctx.font = "48px sans-serif";
   ctx.strokeText("Hello, World!", 10, 50);
+      ctx.closePath();
   }
-    
+
     /*
      * Rectangle. 3 points.
      *
@@ -40,9 +42,8 @@ function sayHello() {
      *     - X- or Y- coordinates less than 5
      *     - Combinations of heights/widths and X-/Y-coordinates that would make
      *       it impossible to draw the rectangle within the bounds of the canvas
-     * <canvas width="1024px" height="512px" id="canvas2">
      */
-    
+
     function drawRectangle() {
     const canvas = document.getElementById("canvas2");
     const ctx = canvas.getContext("2d");
@@ -50,35 +51,40 @@ function sayHello() {
     let width = 1100;
     let xcoord = 1100;
     let ycoord = 1100;
+    let erase = ctx.clearRect(0, 0, 1024, 512);
     height = Number(prompt("Height:"));
     width = Number(prompt("Width:"));
     xcoord = Number(prompt("X:"));
     ycoord = Number(prompt("Y:"));
     if (width < 1){
+      erase;
       alert("Your width is too small.");
     }
     else if (height < 1) {
+      erase;
       alert("Your height is too small.");
     }
     else if (xcoord < 5) {
+      erase;
       alert("Your x-coordinate is too small.");
     }
     else if (ycoord < 5) {
+      erase;
       alert("Your y-coordinate is too small.");
     }
     else if (height+xcoord > 512 || width + ycoord > 1024) {
+      erase;
       alert("The rectangle will not fit on the canvas.");
     }
     else if (!(width < 1 && height < 1 && xcoord < 5 && ycoord < 5 && height+xcoord > 512 && width + ycoord > 1024)){
-      ctx.clearRect(0, 0, 1024, 512);
+          ctx.clearRect(0, 0, 1024, 512);
       ctx.beginPath();
       ctx.rect(xcoord,ycoord,width,height);
       ctx.stroke();
       ctx.closePath();
-      
     }
     }
-    
+
     /*
      * Color. 3 points.
      *
@@ -103,26 +109,22 @@ function sayHello() {
      * Check the example to see what your code should do if the user enters an
      * unsupported color.
      */
-    
+
     function drawColoredRectangle() {
       const canvas = document.getElementById("canvas3");
       const ctx = canvas.getContext("2d");
       let color = prompt("Color:");
       let accepted = ["black", "blue", "green", "orange", "purple", "red", "yellow"]
       if (accepted.includes(color) == true) {
-  //       ctx.font = "48px sans-serif";
-  // ctx.strokeText("Hssssssssssssello, World!", 100, 100);
-  //       alert("1st");
         ctx.clearRect(0, 0, 1024, 128);
         ctx.fillStyle = color;
         ctx.fillRect(10, 10, 100, 50);
            }
     else {
-      prompt( color + " is not a unsupported color.");
+      alert( color + " is not a unsupported color.");
     }
     }
-    
-    
+
     /*
      * Triangle. 5 points.
      *
@@ -151,8 +153,8 @@ function sayHello() {
      *     - Combinations of side lengths that would make it impossible to draw
      *       the triangle within the bounds of the canvas
      */
-    
-    
+
+
     function drawTriangle() {
       const canvas = document.getElementById("canvas4");
       const ctx = canvas.getContext("2d");
@@ -167,8 +169,9 @@ function sayHello() {
       let a = sides[0] + 10;
       let b = sides[1] + 10;
       if((sides[0]**2 + sides[1]**2) == sides[2]**2 && a <= 512 && b <= 1024){
+
         ctx.clearRect(0, 0, 1024, 512);
-          ctx.beginPath();          
+          ctx.beginPath();
           ctx.moveTo(10,10);
           ctx.lineTo(10, a);
           ctx.lineTo(b, a);
@@ -180,8 +183,7 @@ function sayHello() {
         alert("This is not a valid right triangle.");
       }
     }
-    
-    
+
     /*
      * Smile. 7 points.
      *
@@ -212,16 +214,16 @@ function sayHello() {
 else if(face < 1){
    alert("Your radius is too small.")
  }
-else if(face > ((canvas.height-24)/2)){
+else if(face > ((canvas.height-20)/2)){
    alert("The smiley face will not fit on the canvas.");
  }
  else{
    face =Number(face);
-  //  alert(face);
+
   ctx.clearRect(0, 0, 1024, 512);
   ctx.beginPath();
-  let facecenterx=face+12;
-  let facecentery=face+12;
+  let facecenterx=face+10;
+  let facecentery=face+10;
   ctx.arc(facecenterx, facecentery, face , 0, 2 * Math.PI);
   ctx.stroke();
   ctx.closePath();
@@ -237,16 +239,14 @@ else if(face > ((canvas.height-24)/2)){
   ctx.arc(eyerightx, eyerighty, eyeradius, 0, 2 * Math.PI);
   ctx.stroke();
   ctx.closePath();
-
+//smile
   ctx.beginPath();
   ctx.arc(facecenterx, facecentery, smile , 1*Math.PI, 2 * Math.PI, true);
   ctx.stroke();
   ctx.closePath();
  }
-     
+
     }
-    
-    
     /*
      * Star. 9 points.
      *
@@ -264,17 +264,17 @@ else if(face > ((canvas.height-24)/2)){
      * too large, should be prohibited. Check the example to see what your code
      * should do in these instances.
      */
-    
-    
+
+
     function drawStar() {
       const canvas = document.getElementById("canvas6");
       const canvasCtx = canvas.getContext("2d");
-      let alpha = (2 * Math.PI) / 10; 
+      let alpha = (2 * Math.PI) / 10;
       let radiusout = prompt("Outer Radius:");
       let radiusin = prompt("Inner Radius:");
       let starXY = [125,125]
       let r;
-      canvasCtx.clearRect(0, 0, 1024, 512);
+      canvasCtx.clearRect(0, 0, 1024, 256);
       if(isNaN(radiusout)){
         alert("One of your inputs is not a number.");
       }
@@ -283,7 +283,6 @@ else if(face > ((canvas.height-24)/2)){
       }
      else if(radiusout > ((canvas.height-24)/2)){
         alert("The star will not fit on the canvas.");
-        
       }
       else{
         if(isNaN(radiusin)){
@@ -299,12 +298,9 @@ else if(face > ((canvas.height-24)/2)){
           alert("Your outer radius must be larger than your inner radius.");
         }
         else {
-
       canvasCtx.beginPath();
-      
       for(let i = 11; i != 0; i--)
       {
-        
           if(i%2 == 1){
             r= radiusout;
           }
@@ -319,8 +315,8 @@ else if(face > ((canvas.height-24)/2)){
     }
       }
     }
-    
-    
+
+
     /*
      * Stop Sign. 7 points.
      *
@@ -335,35 +331,45 @@ else if(face > ((canvas.height-24)/2)){
      *
      * The leftmost and topmost sides should have X- and Y-coordinates of 10.
      */
-    
-    
+
+
     function drawStopSign() {
       const canvas = document.getElementById("canvas7");
       const ctx = canvas.getContext("2d");
       let numberOfSides = 8;
-      let size = 80;
-     let Xcenter = 100;
-     let Ycenter = 100;
+      let size = 80/2/Math.sin(20*Math.PI/180);
+      let length =80/2/Math.tan(20*Math.PI/180);
+     let Xcenter = 10+ length;
+     let Ycenter = 10+ length;
      let offset= 1 / 16 * 2 * Math.PI;
-  
+     ctx.clearRect(0, 0, 1024, 256 );
   ctx.beginPath();
-  ctx.moveTo (Xcenter +  size * Math.cos(offset), Ycenter +  size *  Math.sin(offset));          
-  
-  for (var i = 1; i <= numberOfSides; i += 1) 
+  ctx.moveTo (Xcenter +  size * Math.cos(offset), Ycenter +  size *  Math.sin(offset));
+  for (var i = 1; i <= numberOfSides; i += 1)
   {
+
       ctx.lineTo (Xcenter + size * Math.cos(i * 2 * Math.PI / numberOfSides + offset), Ycenter + size * Math.sin(i * 2 * Math.PI / numberOfSides + offset));
   }
-  
   ctx.strokeStyle = "#000000";
+  ctx.fillStyle = "red"
+  ctx.fill();
   ctx.lineWidth = 1;
   ctx.stroke();
+
+  ctx.moveTo(Xcenter, Ycenter);
+  ctx.font = "70px sans-serif";
+  ctx.fillStyle = "white";
+  ctx.textBaseline = "middle";
+  ctx.fillText("STOP", Xcenter - offset -95 , Ycenter + offset +5 );
+  ctx.closePath();
+
   }
-    
-    
-    
+
+
+
     /*
      * Pyramid. 7 points.
-     *
+     *look at this again
      * Write a function that draws a block pyramid, where the user specifies the
      * side length of each block. By default, we'll draw a pyramid with a base
      * of five blocks. Give the leftmost point of the pyramid an X-coordinates of
@@ -378,16 +384,30 @@ else if(face > ((canvas.height-24)/2)){
      * too large, should be prohibited. Check the example to see what your code
      * should do in these instances.
      */
-    
-    
     function drawPyramid() {
-    let sidelength= prompt("Length:");
-    ctx.clearRect(0, 0, 1024, 512);
-    ctx.beginPath();
-    ctx.rect(xcoord,ycoord,width,height);
+    let canvas = document.getElementById("canvas8");
+    let ctx = canvas.getContext("2d");
+    let side = prompt("Length:");
+    bottom = canvas.height -10;
+    left = 10;
+    if(side > 100.2){
+      alert("The pyramid will not fit on the canvas.")
     }
-    
-    
+    if(isNaN(side)){
+      alert("Your input is not a number.")
+    }
+    ctx.clearRect(0, 0, 1024, 512);
+    for (let i=5; i>0 ; i--){
+         for( let j=0; j<i; j++){
+            ctx.rect(left+j*side, bottom - side, side, side);
+        }
+        left = left + side/2;
+        bottom = bottom - side;
+    }
+    ctx.stroke();
+  }
+
+
     /*
      * House. 7 points.
      *
@@ -416,8 +436,71 @@ else if(face > ((canvas.height-24)/2)){
      * Check the example to see what your code should do if the user enters an
      * unsupported color.
      */
-    
-    
+
+
     function drawHouse() {
-    alert("s")
+      let canvas = document.getElementById("canvas9");
+    let ctx = canvas.getContext("2d");
+    let housecolor = prompt("House Color:");
+    let doorcolor = prompt("Front Door Color:");
+    let accepted = ["brown", "blue", "green", "orange", "purple", "red", "yellow"]
+
+    let W = 700;
+    let H = 2/3 * W;
+    let roofH = H * 1/2;
+    let bottom = canvas.height - 10;
+    let left = 150;
+    let houseTopLeftX = left;
+    let houseTopLeftY = bottom - H;
+    let windowSize = W * 0.1;
+    let doorW = W *.15;
+    let doorH = H * .33;
+    if (accepted.includes(housecolor) == true && accepted.includes(doorcolor) == true && housecolor == doorcolor){
+      alert("The house and door color should be different but I'll let you pass.")
+    }
+    if (accepted.includes(housecolor) == true && accepted.includes(doorcolor) == true) {
+        ctx.clearRect(0, 0, 1024, 760);
+
+        ctx.beginPath();
+        ctx.rect(houseTopLeftX, houseTopLeftY, W, H); ////floors
+        ctx.fillStyle = housecolor ;
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(1/7*W+houseTopLeftX, 1/6*H+houseTopLeftY, windowSize,windowSize);
+    ctx.rect(5/7*W+houseTopLeftX, 1/6*H+houseTopLeftY, windowSize,windowSize);
+    ctx.rect(1/7*W+houseTopLeftX, 4/6*H+houseTopLeftY, windowSize,windowSize);
+    ctx.rect(5/7*W+houseTopLeftX, 4/6*H+houseTopLeftY, windowSize,windowSize);
+    ctx.fillStyle = "#87CEFA" ;
+    ctx.fill();
+    ctx.closePath;
+    //door
+    ctx.beginPath();
+    ctx.rect(3/7*W+houseTopLeftX, 4/6*H+houseTopLeftY, doorW, doorH);
+    ctx.fillStyle = doorcolor;
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+// door knob
+    ctx.beginPath();
+    ctx.arc(3.9/7*W+houseTopLeftX, 5/6*H+houseTopLeftY, 7, 0, 2 * Math.PI, false);
+    ctx.stroke();
+    ctx.fillStyle = "yellow" ;
+    ctx.fill();
+    ctx.closePath();
+//rooffff
+    ctx.beginPath();
+    ctx.moveTo(houseTopLeftX, houseTopLeftY);
+    ctx.lineTo(houseTopLeftX+W/2, houseTopLeftY-roofH);
+    ctx.lineTo(houseTopLeftX+W,houseTopLeftY);
+    ctx.fillStyle = "grey" ;
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+      }
+      else{
+        ctx.clearRect(0, 0, 1024, 760);
+        alert("One of your colors is not supported.")
+      }
     }
